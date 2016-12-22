@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="Musée.UserControl2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="UC2"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <TextBlock TextWrapping="Wrap" Text="{Binding DescriptionOrg, ElementName=UC2}"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

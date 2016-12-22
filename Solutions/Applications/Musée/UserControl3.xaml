@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="Musée.UserControl3"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Musée"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="600" Name="UC3">
+
+    <Grid>
+
+        <TabControl x:Name="tabControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+            <TabControl.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="FontSize" Value="10"/>
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0,0,10,0"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="MaxHeight" Value="22"/>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Header="Collection">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ComboBox Grid.Row="0" Grid.Column="0" Name="comboBoxSelectCollection" HorizontalAlignment="Center" MaxDropDownHeight="80"
+                              VerticalAlignment="Center" MinWidth="150" ItemsSource="{Binding Racine.AllColl}"
+                              IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource AffichageNom}"/>
+
+                    <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+                        <Button Name="buttonAnnulerColl" Content="Annuler" Click="buttonAnnulerColl_Click" Visibility="Collapsed"/>
+                        <Button Name="buttonAjoutCollection" Content="Ajouter" Click="buttonAjoutCollection_Click"/>
+                        <Button Name="buttonModifCollection" Content="Modifier" Click="buttonModifCollection_Click"/>
+                        <Button Name="buttonSuppCollection" Content="Supprimer" Click="buttonSuppCollection_Click"/>
+                    </WrapPanel>
+
+
+                    <StackPanel Name="stackPanelListeModifElems" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+                        <TextBlock Name="textBlockListeElem" Text="Liste des éléments :" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <TextBlock Name="textBlockSupprListeElem" Text="Séléctionner les éléments à supprimer :" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed"/>
+                        <ListView Name="listeElemsColl" Margin="5" VerticalAlignment="Stretch" MinHeight="60" MaxHeight="60"
+                                  DataContext="{Binding SelectedItem, ElementName=comboBoxSelectCollection}" SelectionMode="Extended"
+                                  ItemsSource="{Binding AllElemDePDM}"
+                                  ItemTemplate="{StaticResource AffichageNom}"/>
+                    </StackPanel>
+
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Name="stackPanelZoneCol" Visibility="Collapsed" >
+                            <TextBlock Name="textBlockNomZoneCol"  Text="Zone :" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox Name="textBoxNomZoneCol" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="2" MinWidth="50" MaxWidth="100"/>
+                        </StackPanel>
+
+                        <StackPanel Name="stackPanelNomCol" Grid.Column="1" Visibility="Collapsed">
+                            <TextBlock Name="textBlockNomCol"  Text="Nom :" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <TextBox Name="textBoxNomCol" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="2" MinWidth="50" MaxWidth="100"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Name="stackPanelListAjouteElems" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
+                        <TextBlock Name="textBlockListAjouteElem" HorizontalAlignment="Center" Text="Sélectionner les éléments à ajouter :"/>
+                        <ListBox Name="listBoxAjouteElem" HorizontalAlignment="Center" MinWidth="190" MinHeight="60" MaxHeight="60" Margin="5" 
+                                 SelectionMode="Extended" DataContext="{Binding Racine}" 
+                                 ItemsSource="{Binding AllElemSeuls}" ItemTemplate="{StaticResource AffichageNom}"/>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Element">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox Name="comboBoxElem" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150" MaxDropDownHeight="80"
+                              ItemsSource="{Binding Racine.AllElemDePDM}" IsSynchronizedWithCurrentItem="True" ItemTemplate="{StaticResource AffichageNom}"/>
+                    
+                    <Grid Name="gridMedia" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Name="buttonSupprimerMedia" Content="Supprimer média(s)" TextBlock.FontSize="10" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                Click="buttonSupprimerMedia_Click"/>
+                        <Button Grid.Column="1" Name="buttonAjouterMedia" TextBlock.FontSize="10" Content="Ajouter média" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                Click="buttonAjouterMedia_Click"/>
+                    </Grid>
+                    
+                    <WrapPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+                        <Button Name="buttonAnnulerElem" Content="Annuler" Click="buttonAnnulerElem_Click" Visibility="Collapsed"/>
+                        <Button Name="buttonAjoutElem" Content="Ajouter" Click="buttonAjoutElem_Click"/>
+                        <Button Name="buttonModifElem" Content="Modifier" Click="buttonModifElem_Click"/>
+                        <Button Name="buttonSuppElem" Content="Supprimer" Click="buttonSuppElem_Click"/>
+                    </WrapPanel>
+
+
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Name="stackPanelNomZone" Visibility="Collapsed">
+                            <TextBlock Name="textBlockNomZone" HorizontalAlignment="Center" Text="Zone :"/>
+                            <TextBox Name="textBoxNomZone" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}" 
+                                     HorizontalAlignment="Center" MinWidth="50" MaxWidth="80"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Name="stackPanelNomElement" Visibility="Collapsed">
+                            <TextBlock Name="textBlockNomElement" HorizontalAlignment="Center"  Text="Nom :"/>
+                            <TextBox Name="textBoxNomElement" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}"
+                                     HorizontalAlignment="Center" MinWidth="50" MaxWidth="80"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Name="stackPanelAuteur" Visibility="Collapsed">
+                            <TextBlock Name="textBlockAuteur" HorizontalAlignment="Center" Text="Auteur(ou vide) :"/>
+                            <TextBox Name="textBoxAuteur" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}"
+                                     HorizontalAlignment="Center" MinWidth="50" MaxWidth="80"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <StackPanel Name="stackPanelDescElement" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
+                        <TextBlock Name="textBlockDescElement" VerticalAlignment="Top" HorizontalAlignment="Center" Text="Description de l'élément :"/>
+                        <TextBox Name="textBoxDescElement" Text="{Binding Description}" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}"
+                                 AcceptsReturn="True" VerticalAlignment="Stretch" MinHeight="60" MinWidth="200" Margin="2" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanelCaracElement" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
+                        <TextBlock Name="textBlockCaracElement" HorizontalAlignment="Center" Text="Caractéristique(s) de l'élément :"/>
+                        <TextBox Name="textBoxCaracElement" Text="{Binding Caracteristiques}" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}"
+                                 AcceptsReturn="True" MinHeight="60" MinWidth="200" Margin="2"/>
+                    </StackPanel>
+
+                    <StackPanel Name="stackPanelListMedia" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Visibility="Collapsed">
+                        <TextBlock Name="textBlockListMedia" HorizontalAlignment="Center" Text="Média(s) de l'élément :"/>
+                        <ListBox Name="listBoxMedia" MinHeight="60" MinWidth="200" Margin="3" DataContext="{Binding SelectedItem, ElementName=comboBoxElem}"
+                                 ItemsSource="{Binding EnsMedia}" ItemTemplate="{StaticResource AffichageCheminMedia}" SelectionMode="Extended"/>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Général">
+
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Nom de l'organisme :"/>
+                        <TextBox Name="textBoxNomGeneral" Text="{Binding NomOrg, ElementName=UC3}" Grid.Column="1" MaxLines="1" />
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Adresse :"/>
+                        <TextBox Name ="textBoxAdresseGeneral" Text="{Binding AdresseOrg, ElementName=UC3}" Grid.Row="1" Grid.Column="1" MaxLines="1"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Margin="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Mail :"/>
+                        <TextBox Name="textBoxMailGeneral" Grid.Column="1" Text="{Binding MailOrg, ElementName=UC3}" MaxLines="1"/>
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Numéro de téléphone :"/>
+                        <TextBox Name="textBoxTelGeneral" Text="{Binding TelOrg, ElementName=UC3}" Grid.Row="1" Grid.Column="1" MaxLines="1"/>
+                    </Grid>
+
+                    <WrapPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                        <Button Name="buttonValiderGen" Content="Valider"  Click="buttonValiderGen_Click"/>
+                        <Button Name="buttonAnnulerGen" Content="Annuler" Click="buttonAnnulerGen_Click"/>
+                    </WrapPanel>
+
+                    <TextBlock Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Text="Description de l'organisme :" Margin="5"/>
+                    <TextBox Name="textBoxDescGeneral" AcceptsReturn="True" Grid.Column="1" TextWrapping="Wrap" Text="{Binding DescOrg, ElementName=UC3}" Grid.Row="1" Grid.ColumnSpan="2" MinHeight="50"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</UserControl>

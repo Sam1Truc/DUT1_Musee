@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfanyType xmlns:i="http://www.w3.org/2001/XMLSchema-instance" z:Id="1" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/" xmlns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <anyType z:Id="2" xmlns:d2p1="http://schemas.datacontract.org/2004/07/Core" i:type="d2p1:Administrateur">
+    <d2p1:Identifiant z:Id="3">Admin</d2p1:Identifiant>
+    <d2p1:Mail z:Id="4">none</d2p1:Mail>
+    <d2p1:MotDePasse z:Id="5">admin</d2p1:MotDePasse>
+    <d2p1:Nom z:Id="6">default</d2p1:Nom>
+    <d2p1:Prenom z:Ref="6" i:nil="true" />
+  </anyType>
+</ArrayOfanyType>
